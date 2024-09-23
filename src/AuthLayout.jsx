@@ -17,7 +17,12 @@ export function AuthLayout({ children }) {
     setIsRendered(true);
   }, []);
 
-  if (!isRendered) return <></>;
+  if (!isRendered) return <title>Загрузка... | IT-Docs</title>;
   if (isAuth) return children;
-  return current ? <AuthForm sw={s} /> : <RegForm sw={s} />;
+  return (
+    <>
+      <title>Авторизация | IT-Docs</title>
+      {current ? <AuthForm sw={s} /> : <RegForm sw={s} />}
+    </>
+  );
 }
