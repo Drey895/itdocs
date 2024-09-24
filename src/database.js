@@ -1,43 +1,33 @@
-'use server'
+import postgres from "postgres";
 
-import postgres from 'postgres'
-export const sql = postgres('postgres://postgres:postgres@127.0.0.1:5432/itdocs')
+const sql = postgres("postgres://postgres:postgres@localhost:5432/itdocs");
+await sql`DROP TABLE IF EXISTS "public"."files"`;
+await sql`DROP TABLE IF EXISTS "public"."users"`;
+await sql`DROP SEQUENCE IF EXISTS files_id_seq`;
+await sql`DROP SEQUENCE IF EXISTS users_id_seq`;
 
-sql`
-DROP TABLE IF EXISTS "public"."files";
--- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
+await sql`CREATE SEQUENCE IF NOT EXISTS users_id_seq`;
+await sql`CREATE TABLE "public"."users" (
+	    "id" int8 NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+	    "username" text,
+	    "password" text NOT NULL DEFAULT NULL::bpchar,
+	    "role" text NOT NULL DEFAULT 'user'::bpchar
+	)`;
+await sql`CREATE UNIQUE INDEX id ON public.users USING btree (id)`;
+await sql`CREATE UNIQUE INDEX username ON public.users USING btree (username)`;
 
--- Sequence and defined type
-CREATE SEQUENCE IF NOT EXISTS files_id_seq;
+await sql`CREATE SEQUENCE IF NOT EXISTS files_id_seq`;
+await sql`CREATE TABLE "public"."files" (
+		"id" int8 NOT NULL DEFAULT nextval('files_id_seq'::regclass),
+		"user_id" int8 NOT NULL,
+		"name" text NOT NULL,
+		"size" text NOT NULL,
+		"type" text NOT NULL,
+		"created_at" timestamptz NOT NULL DEFAULT now(),
+		CONSTRAINT "files_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id")
+	)`;
 
--- Table Definition
-CREATE TABLE "public"."files" (
-    "id" int8 NOT NULL DEFAULT nextval('files_id_seq'::regclass),
-    "user_id" int8 NOT NULL,
-    "name" bpchar(64) NOT NULL,
-    CONSTRAINT "files_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id")
-);
+await sql`INSERT INTO "public"."users" ("username", "password", "role") VALUES ('admin', 'admin', 'admin')`;
+await sql`INSERT INTO "public"."users" ("username", "password", "role") VALUES ('user', 'user', 'user')`;
 
-DROP TABLE IF EXISTS "public"."users";
--- This script only contains the table creation statements and does not fully represent the table in the database. Do not use it as a backup.
-
--- Sequence and defined type
-CREATE SEQUENCE IF NOT EXISTS users_id_seq;
-
--- Table Definition
-CREATE TABLE "public"."users" (
-    "id" int8 NOT NULL DEFAULT nextval('untitled_table_212_id_seq'::regclass),
-    "name" text,
-    "password" bpchar(32) NOT NULL DEFAULT NULL::bpchar,
-    "role" bpchar(10) NOT NULL DEFAULT 'user'::bpchar
-);
-
-
--- Indices
-CREATE UNIQUE INDEX id ON public.users USING btree (id);
-
-INSERT INTO "public"."users" ("id", "name", "password", "role") VALUES
-(1, 'admin', 'admin                           ', 'user      ');
-INSERT INTO "public"."users" ("id", "name", "password", "role") VALUES
-(2, 'user', 'user                            ', 'user      ');
-`.execute()
+export { sql };
