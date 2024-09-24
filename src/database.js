@@ -13,8 +13,8 @@ await sql`CREATE TABLE "public"."users" (
 	    "password" text NOT NULL DEFAULT NULL::bpchar,
 	    "role" text NOT NULL DEFAULT 'user'::bpchar
 	)`;
-await sql`CREATE UNIQUE INDEX id ON public.users USING btree (id)`;
-await sql`CREATE UNIQUE INDEX username ON public.users USING btree (username)`;
+await sql`CREATE UNIQUE INDEX users_id ON public.users USING btree (id)`;
+await sql`CREATE UNIQUE INDEX users_username ON public.users USING btree (username)`;
 
 await sql`CREATE SEQUENCE IF NOT EXISTS files_id_seq`;
 await sql`CREATE TABLE "public"."files" (
@@ -26,6 +26,8 @@ await sql`CREATE TABLE "public"."files" (
 		"created_at" timestamptz NOT NULL DEFAULT now(),
 		CONSTRAINT "files_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id")
 	)`;
+await sql`CREATE UNIQUE INDEX files_id ON public.files USING btree (id)`;
+// await sql`CREATE UNIQUE INDEX files_id ON public.files USING btree (id)`;
 
 await sql`INSERT INTO "public"."users" ("username", "password", "role") VALUES ('admin', 'admin', 'admin')`;
 await sql`INSERT INTO "public"."users" ("username", "password", "role") VALUES ('user', 'user', 'user')`;
