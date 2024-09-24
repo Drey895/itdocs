@@ -1,6 +1,6 @@
 import postgres from "postgres";
 
-const sql = postgres("postgres://postgres:postgres@db:5432/itdocs");
+const sql = postgres("postgres://postgres:postgres@localhost:5432/itdocs");
 await sql`DROP TABLE IF EXISTS "public"."files"`;
 await sql`DROP TABLE IF EXISTS "public"."users"`;
 await sql`DROP SEQUENCE IF EXISTS files_id_seq`;
@@ -21,6 +21,9 @@ await sql`CREATE TABLE "public"."files" (
 		"id" int8 NOT NULL DEFAULT nextval('files_id_seq'::regclass),
 		"user_id" int8 NOT NULL,
 		"name" text NOT NULL,
+		"size" text NOT NULL,
+		"type" text NOT NULL,
+		"created_at" timestamptz NOT NULL DEFAULT now(),
 		CONSTRAINT "files_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id")
 	)`;
 
