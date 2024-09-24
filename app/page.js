@@ -1,3 +1,4 @@
+import { Home } from "@/home";
 import { AuthLayout } from "@/AuthLayout";
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
       <img src="/logo.png" alt="" />
       <AuthLayout>
         <title>Добро пожаловать! | IT-Docs</title>
-        <div className="text-2xl">{"Добро пожаловать!"}</div>
+        <Home/>
       </AuthLayout>
     </main>
   );
