@@ -1,7 +1,8 @@
 "use client";
 
+import { useUser } from "@/hooks";
 import Link from "next/link";
-import { Button } from "./Button";
+import { Button, NavButton } from ".";
 
 export function SideBar() {
   function logout() {
@@ -9,20 +10,19 @@ export function SideBar() {
     window.location.reload();
   }
 
+  const user = useUser();
+
   return (
-    <div
-      className="fixed w-[15%] h-[100vh] left-0 
-    flex flex-col justify-between p-5 border-r shadow"
-    >
-      <div className="flex flex-col gap-1 justify-center">
-        <Button className="bg-red-500 text-white text-right px-2">
-          Документы
-        </Button>
-        <Button className="hover:bg-red-100 text-right px-2">
-          Пользователи
-        </Button>
-        <Button className="hover:bg-red-100 text-right px-2">Группы</Button>
-      </div>
+    <div className="fixed w-[15%] h-[100vh] left-0 flex flex-col justify-between p-5 border-r shadow">
+      <nav className="flex flex-col gap-1 justify-center">
+        <NavButton href={"/panel/documents"}>Документы</NavButton>
+        <NavButton href={"/panel/groups"}>Группы</NavButton>
+        {user && user.role === "admin" && (
+          <>
+            <NavButton href={"/panel/users"}>Пользователи</NavButton>
+          </>
+        )}
+      </nav>
       <div className="flex flex-col gap-3 justify-center text-center text-black/60">
         <Link href="/about">О нас</Link>
         <Link href="/contacts">Контакты</Link>

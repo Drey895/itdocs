@@ -1,6 +1,6 @@
 import postgres from "postgres";
 
-const sql = postgres("postgres://postgres:postgres@localhost:5432/itdocs");
+const sql = postgres("postgres://postgres:postgres@db:5432/itdocs");
 await sql`DROP TABLE IF EXISTS "public"."files"`;
 await sql`DROP TABLE IF EXISTS "public"."users"`;
 await sql`DROP SEQUENCE IF EXISTS files_id_seq`;

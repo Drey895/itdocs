@@ -1,10 +1,5 @@
-import { Home } from "@/pagesLayer";
-import { AuthLayout } from "@/AuthLayout";
+import { notFound } from "next/navigation";
 
 export default function Page() {
-  return (
-    <AuthLayout>
-      <Home />
-    </AuthLayout>
-  );
+  notFound();
 }
