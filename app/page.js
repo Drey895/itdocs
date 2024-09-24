@@ -1,15 +1,14 @@
-import AuthForm from "@/AuthForm";
-import { AuthSwitch } from "@/AuthSwitch";
 import { Home } from "@/home";
-import Image from "next/image";
+import { AuthLayout } from "@/AuthLayout";
 
-export default function Page() {
+export default function Home() {
   return (
-  //  <main className="w-full h-[100vh] flex flex-col justify-center items-center gap-2">
-  //   <img src="/logo.png"/>
-  //   <AuthSwitch/>
-  //  </main>
-  <Home/>
-
+    <main className="w-full h-[100vh] flex flex-col justify-center items-center gap-2">
+      <img src="/logo.png" alt="" />
+      <AuthLayout>
+        <title>Добро пожаловать! | IT-Docs</title>
+        <Home/>
+      </AuthLayout>
+    </main>
   );
 }
