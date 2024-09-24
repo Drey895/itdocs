@@ -18,7 +18,9 @@ export function AuthLayout({ children }) {
     setIsRendered(true);
   }, []);
 
-  if (isAuth) return children;
+  if (isAuth) {
+    return children;
+  }
   return (
     <>
       <main className="w-full h-[100vh] flex flex-col justify-center items-center gap-2">
