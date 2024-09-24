@@ -5,9 +5,9 @@ export default function Layout({ children }) {
   return (
     <AuthLayout>
       <SideBar />
-      <main className="fixed w-[85%] h-[100vh] right-0">
+      <main className="flex flex-col sm:ml-[200px] md:ml-[300px] lg:ml-[350px] min-h-[100vh]">
         {children}
-        <footer className="absolute bottom-1 w-full z-50 text-sm text-black/60 text-center font-mono tracking-wider">
+        <footer className="text-sm text-black/60 text-center font-mono tracking-wider">
           © 2024 Рей Денис. Все права защищены.
         </footer>
       </main>
