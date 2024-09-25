@@ -13,12 +13,14 @@ export function SideBar() {
   const user = useUser();
 
   return (
-    <div className="hidden fixed h-[100vh] left-0 sm:flex flex-col justify-between p-5 border-r shadow sm:w-[200px] lg:w-[300px] xl:w-[350px]">
+    <div className="hidden fixed h-[100vh] left-0 sm:flex flex-col justify-between p-5 border-r shadow sm:w-[200px] md:w-[300px] lg:w-[350px]">
       <div className="flex flex-col items-center justify-center gap-5">
-        <div className="sm:w-[80%] md:w-[75%] xl:w-[70%]">
+        <div className="sm:w-[150px] md:w-[150px] lg:w-[200px]">
           <img className="w-full h-full" src="/logo.png" alt="" />
         </div>
-        <div className="font-sans">Здравствуйте, {user && user.username}!</div>
+        <div className="font-sans text-center">
+          Здравствуйте, {user && user.username}!
+        </div>
         <nav className="flex flex-col gap-1 justify-center w-full">
           <NavButton href={"/panel/documents"}>Документы</NavButton>
           <NavButton href={"/panel/groups"}>Группы</NavButton>
