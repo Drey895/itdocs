@@ -1,10 +1,7 @@
 "use client";
 
-import { useUser } from "@/hooks";
 import { notFound } from "next/navigation";
 
-export function CheckRole() {
-  const user = useUser();
+export function CheckRole(user) {
   if (user && user.role !== "admin") return notFound();
-  return <></>;
 }

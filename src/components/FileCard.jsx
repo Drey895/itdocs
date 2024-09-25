@@ -1,6 +1,5 @@
 import { downloadFile } from "@/actions/downloadFile";
 import { Button } from ".";
-import { use } from "react";
 
 export function FileCard({ data }) {
   const formatter = Intl.DateTimeFormat("ru-RU", {
@@ -17,7 +16,7 @@ export function FileCard({ data }) {
         </div>
         <Button
           onClick={async () => {
-            const base64String = await downloadFile(data.id);
+            const base64String = await downloadFile(data.id, data.user_id);
             const binaryString = atob(base64String);
             const byteNumbers = new Array(binaryString.length);
             for (let i = 0; i < binaryString.length; i++) {
@@ -25,14 +24,31 @@ export function FileCard({ data }) {
             }
             const byteArray = new Uint8Array(byteNumbers);
             const blob = new Blob([byteArray], {
-              type: "application/octet-stream",
+              type: data.type,
             });
-            const saveFile = await window.showSaveFilePicker({
-              suggestedName: data.name,
-            });
-            const writable = await saveFile.createWritable();
-            await writable.write(blob);
-            await writable.close();
+            const link = document.querySelector(`#file-${data.id}`);
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            link.href = "";
+            // const accept = {};
+            // accept[data.type] = [];
+            // try {
+            //   const saveFile = await window.showSaveFilePicker({
+            //     excludeAcceptAllOption: true,
+            //     suggestedName: data.name,
+            //     startIn: "downloads",
+            //     types: [
+            //       {
+            //         accept,
+            //       },
+            //     ],
+            //   });
+            //   const writable = await saveFile.createWritable();
+            //   await writable.write(blob);
+            //   await writable.close();
+            // } catch (err) {
+            //   console.error(err);
+            // }
           }}
           className="bg-gray-100 hover:bg-gray-200 font-sans"
         >
@@ -55,6 +71,7 @@ export function FileCard({ data }) {
           </div>
         </div>
       </div>
+      <a id={`file-${data.id}`} download hidden />
     </div>
   );
 }

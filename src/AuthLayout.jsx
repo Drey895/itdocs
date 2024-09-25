@@ -4,7 +4,7 @@ import { AuthForm, RegForm } from "@/forms";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export function AuthLayout({ children }) {
+export function AuthLayout({ children, user }) {
   const [current, setCurrent] = useState(true);
   const s = () => {
     setCurrent((c) => !c);
@@ -14,9 +14,11 @@ export function AuthLayout({ children }) {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("user")) setIsAuth(true);
     setIsRendered(true);
-  }, []);
+    if (user?.id) {
+      setIsAuth(true);
+    }
+  }, [user]);
 
   if (isAuth) {
     return children;

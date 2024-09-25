@@ -1,6 +1,7 @@
 "use server";
 
 import { insertUser } from "@/queries/users";
+import { login } from "@/user";
 
 export async function regAction(prevState, formData) {
   const user = {
@@ -14,9 +15,7 @@ export async function regAction(prevState, formData) {
 
   try {
     const res = await insertUser(user);
-    const store = cookies();
-    store.set("user", JSON.stringify(res));
-    return { data: res };
+    return await login(res[0]);
   } catch (e) {
     return { error: "Ошибка регистрации" };
   }

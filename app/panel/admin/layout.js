@@ -1,6 +1,7 @@
 import { CheckRole } from "@/components";
 
-export default function Layout({ children }) {
-  <CheckRole />;
+export default async function Layout({ children }) {
+  const user = await getUser();
+  CheckRole(user);
   return children;
 }

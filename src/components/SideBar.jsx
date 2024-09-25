@@ -1,17 +1,10 @@
 "use client";
 
-import { useUser } from "@/hooks";
+import { logout } from "@/user";
 import Link from "next/link";
 import { Button, NavButton } from ".";
 
-export function SideBar() {
-  function logout() {
-    localStorage.clear();
-    window.location.reload();
-  }
-
-  const user = useUser();
-
+export function SideBar({ user }) {
   return (
     <div className="hidden fixed h-[100vh] left-0 sm:flex flex-col justify-between border-r shadow sm:p-2 md:p-3 lg:p-4 sm:w-[175px] md:w-[225px] lg:w-[275px]">
       <div className="flex flex-col items-center justify-center gap-5">
@@ -36,7 +29,7 @@ export function SideBar() {
         <Link href="/contacts">Контакты</Link>
         <Button
           className="bg-gray-100 hover:bg-gray-200 rounded-lg text-black"
-          onClick={logout}
+          onClick={() => logout()}
         >
           Выход
         </Button>

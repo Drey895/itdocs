@@ -1,4 +1,4 @@
 export * from "./defaultRedirect";
-export * from "./fetchFiles";
+export * from "./downloadFile";
 export * from "./loginAction";
 export * from "./regAction";
