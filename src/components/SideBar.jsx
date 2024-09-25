@@ -13,9 +13,9 @@ export function SideBar() {
   const user = useUser();
 
   return (
-    <div className="hidden fixed h-[100vh] left-0 sm:flex flex-col justify-between p-5 border-r shadow sm:w-[200px] md:w-[300px] lg:w-[350px]">
+    <div className="hidden fixed h-[100vh] left-0 sm:flex flex-col justify-between border-r shadow sm:p-2 md:p-3 lg:p-4 sm:w-[175px] md:w-[225px] lg:w-[275px]">
       <div className="flex flex-col items-center justify-center gap-5">
-        <div className="sm:w-[150px] md:w-[150px] lg:w-[200px]">
+        <div className="sm:w-[150px] lg:w-[200px]">
           <img className="w-full h-full" src="/logo.png" alt="" />
         </div>
         <div className="font-sans text-center">
