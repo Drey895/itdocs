@@ -9,11 +9,9 @@ export function FileCard({ data }) {
     timeZone: "+0300",
   });
   return (
-    <div className="flex justify-center items-center flex-col p-5 border shadow-sm rounded-lg min-w-[280px] gap-3">
+    <div className="flex justify-center items-center flex-col p-5 border shadow-sm rounded-lg min-w-[300px] gap-3">
       <div className="flex justify-between items-center w-full gap-2">
-        <div className="font-mono text-lg break-words flex-shrink">
-          {data.name}
-        </div>
+        <div className="font-mono text-lg truncate">{data.name}</div>
         <Button
           onClick={async () => {
             const base64String = await downloadFile(data.id, data.user_id);
