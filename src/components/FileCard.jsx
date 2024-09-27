@@ -15,6 +15,7 @@ export function FileCard({ data }) {
         <Button
           onClick={async () => {
             const base64String = await downloadFile(data.id, data.user_id);
+            if (!base64String) return;
             const binaryString = atob(base64String);
             const byteNumbers = new Array(binaryString.length);
             for (let i = 0; i < binaryString.length; i++) {
@@ -28,25 +29,6 @@ export function FileCard({ data }) {
             link.href = URL.createObjectURL(blob);
             link.click();
             link.href = "";
-            // const accept = {};
-            // accept[data.type] = [];
-            // try {
-            //   const saveFile = await window.showSaveFilePicker({
-            //     excludeAcceptAllOption: true,
-            //     suggestedName: data.name,
-            //     startIn: "downloads",
-            //     types: [
-            //       {
-            //         accept,
-            //       },
-            //     ],
-            //   });
-            //   const writable = await saveFile.createWritable();
-            //   await writable.write(blob);
-            //   await writable.close();
-            // } catch (err) {
-            //   console.error(err);
-            // }
           }}
           className="bg-gray-100 hover:bg-gray-200 font-sans"
         >

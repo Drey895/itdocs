@@ -1,15 +1,47 @@
 "use client";
 
 import { FileCard, Packer } from "@/components";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { selectFiles } from "@/queries/files";
+import { getUser } from "@/user";
+import { Suspense, useCallback, useEffect, useState } from "react";
+
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
 export function FilesGrid({ init }) {
   const [files, setFiles] = useState([init]);
-  const containerRef = useRef(null);
+  const [lastRequestedFileId, setLastRequestedFileId] = useState(null);
 
-  function onScroll(e) {
-    console.log(e.target);
-  }
+  const onScroll = useCallback(
+    debounce(async (e) => {
+      if (
+        document.documentElement.scrollHeight - window.scrollY <=
+        document.documentElement.clientHeight + window.scrollY * 0.2
+      ) {
+        let sum = 0;
+        files.forEach(async (pack) => (sum += (await pack).length));
+        console.log(sum);
+        const lastPack = await files[files.length - 1];
+        if (lastPack.length < 15) return;
+        const lastFile = lastPack[lastPack.length - 1];
+
+        if (lastFile.id === lastRequestedFileId) return; // Prevent duplicate requests
+        setLastRequestedFileId(lastFile.id); // Update last requested file ID
+
+        const user = await getUser();
+
+        const newPack = selectFiles(user.id, 15, lastFile.id);
+        if ((await newPack).length === 0) return;
+        setFiles((prev) => [...prev, newPack]);
+      }
+    }, 250),
+    [files, lastRequestedFileId]
+  );
 
   useEffect(() => {
     document.addEventListener("scroll", onScroll);
@@ -19,7 +51,7 @@ export function FilesGrid({ init }) {
   });
 
   return (
-    <div className="w-full flex-1 grid grid-cols-auto-fill-300 content-start justify-evenly place-content-center place-items-center justify-items-stretch gap-5 p-5">
+    <div className="w-full flex-1 grid grid-cols-auto-300 xl:grid-cols-auto-450 content-start justify-evenly place-content-center place-items-center justify-items-stretch gap-5 p-1 sm:p-2 md:p-4 lg:p-6">
       {files.map((filePack, i) => (
         <Suspense key={i} fallback={<></>}>
           <Packer Delegate={FileCard} packPromise={filePack} />

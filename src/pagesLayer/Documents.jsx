@@ -4,7 +4,7 @@ import { getUser } from "@/user";
 
 export async function Documents() {
   const user = await getUser();
-  const files = selectFiles(user?.id, 10);
+  const files = selectFiles(user?.id, 30);
   return (
     <>
       <title>Документы | IT-Docs</title>

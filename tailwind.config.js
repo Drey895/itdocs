@@ -8,8 +8,8 @@ module.exports = {
         foreground: "var(--foreground)",
       },
       gridTemplateColumns: {
-        "auto-fill-450": "repeat(auto-fill, minmax(450px, 1fr))",
-        "auto-fill-300": "repeat(auto-fill, minmax(300px, 1fr))",
+        "auto-425": "repeat(auto-fill, minmax(425px, 1fr))",
+        "auto-300": "repeat(auto-fill, minmax(300px, 1fr))",
       },
     },
   },
