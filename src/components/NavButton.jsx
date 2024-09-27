@@ -10,7 +10,9 @@ export function NavButton({ children, href }) {
     <Link
       href={href}
       className={`font-bold py-2 text-right px-2 rounded transition ease-in-out ${
-        pathname === href ? "bg-red-500 text-white" : "hover:bg-red-100"
+        pathname === href
+          ? "bg-red-500 text-white"
+          : "hover:bg-red-100 active:bg-red-500 active:text-white"
       }`}
       disabled={active}
     >

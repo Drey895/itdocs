@@ -28,7 +28,7 @@ export function SideBar({ user }) {
         <Link href="/about">О нас</Link>
         <Link href="/contacts">Контакты</Link>
         <Button
-          className="bg-gray-100 hover:bg-gray-200 rounded-lg text-black"
+          className="bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg text-black"
           onClick={() => logout()}
         >
           Выход

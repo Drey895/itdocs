@@ -1,9 +1,10 @@
 "use client";
 
-import { FileCard, Packer } from "@/components";
-import { selectFiles } from "@/queries/files";
+import { FileCard, Packer, Delegate } from "@/components";
+import { ExtraContext } from "@/ExtraContext";
+import { selectFilesByUser } from "@/queries/files";
 import { getUser } from "@/user";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState, use } from "react";
 
 function debounce(func, wait) {
   let timeout;
@@ -32,7 +33,7 @@ export function FilesGrid({ init }) {
 
         const user = await getUser();
 
-        const newPack = selectFiles(user.id, 15, lastFile.id);
+        const newPack = selectFilesByUser(user.id, 15, lastFile.id);
         if ((await newPack).length === 0) return;
         setFiles((prev) => [...prev, newPack]);
       }
@@ -47,8 +48,13 @@ export function FilesGrid({ init }) {
     };
   });
 
+  const { extra } = use(ExtraContext);
+
   return (
-    <div className="w-full flex-1 grid grid-cols-auto-300 xl:grid-cols-auto-450 content-start justify-evenly place-content-center place-items-center justify-items-stretch gap-5 p-1 sm:p-2 md:p-4 lg:p-6">
+    <div className="w-full flex-1 grid grid-cols-auto-300 xl:grid-cols-auto-450 content-start justify-evenly place-content-center place-items-center justify-items-stretch gap-5 p-1 sm:p-2 md:p-4 lg:p-6 max-w-[1440px]">
+      {extra.map((obj) => (
+        <FileCard key={obj.id} data={obj} />
+      ))}
       {files.map((filePack, i) => (
         <Suspense key={i} fallback={<></>}>
           <Packer Delegate={FileCard} packPromise={filePack} />

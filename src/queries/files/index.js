@@ -1,2 +1,2 @@
 export * from "./selectFileById";
-export * from "./selectFiles";
+export * from "./selectFilesByUser";

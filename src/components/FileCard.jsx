@@ -1,5 +1,6 @@
 import { downloadFile } from "@/actions/downloadFile";
 import { Button } from ".";
+import { getUser } from "@/user";
 
 export function FileCard({ data }) {
   const formatter = Intl.DateTimeFormat("ru-RU", {
@@ -14,7 +15,12 @@ export function FileCard({ data }) {
         <div className="font-mono text-lg truncate">{data.name}</div>
         <Button
           onClick={async () => {
-            const base64String = await downloadFile(data.id, data.user_id);
+            const base64String = await downloadFile(
+              data.id,
+              (
+                await getUser()
+              ).id
+            );
             if (!base64String) return;
             const binaryString = atob(base64String);
             const byteNumbers = new Array(binaryString.length);
@@ -30,7 +36,7 @@ export function FileCard({ data }) {
             link.click();
             link.href = "";
           }}
-          className="bg-gray-100 hover:bg-gray-200 font-sans"
+          className="bg-gray-100 hover:bg-gray-200 font-sans  active:bg-gray-300"
         >
           Загрузить
         </Button>
