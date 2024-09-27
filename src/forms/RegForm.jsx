@@ -53,5 +53,3 @@ export function RegForm({ sw }) {
     </div>
   );
 }
-
-export default RegForm;

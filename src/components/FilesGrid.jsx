@@ -23,9 +23,6 @@ export function FilesGrid({ init }) {
         document.documentElement.scrollHeight - window.scrollY <=
         document.documentElement.clientHeight + window.scrollY * 0.2
       ) {
-        let sum = 0;
-        files.forEach(async (pack) => (sum += (await pack).length));
-        console.log(sum);
         const lastPack = await files[files.length - 1];
         if (lastPack.length < 15) return;
         const lastFile = lastPack[lastPack.length - 1];
