@@ -1,7 +1,7 @@
 "use client";
 
 import { ExtraContext } from "@/ExtraContext";
-import { Button } from ".";
+import { Button } from "@/components";
 import { use } from "react";
 
 export function EditFile() {

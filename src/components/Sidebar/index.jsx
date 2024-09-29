@@ -1,10 +1,11 @@
 "use client";
 
+import { Button } from "@/components";
 import { logout } from "@/user";
 import Link from "next/link";
-import { Button, NavButton } from ".";
+import { NavButton } from "./NavButton";
 
-export function SideBar({ user }) {
+export function Sidebar({ user }) {
   return (
     <div className="hidden fixed h-[100vh] left-0 sm:flex flex-col justify-between border-r shadow sm:p-2 md:p-3 lg:p-4 sm:w-[175px] md:w-[225px] lg:w-[275px]">
       <div className="flex flex-col items-center justify-center gap-5">

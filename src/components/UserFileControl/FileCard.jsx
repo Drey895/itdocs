@@ -1,15 +1,12 @@
 "use client";
 
-import { downloadFile } from "@/actions/downloadFile";
-import { Button } from ".";
-import { getUser } from "@/user";
+import { deleteFileAction, downloadFile, updateFile } from "@/actions/file";
+import { Button, Input } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
-import { use, useId, useState } from "react";
+import { getUser } from "@/user";
+import { use, useState } from "react";
 import { createPortal } from "react-dom";
-import { Input } from ".";
 import { useForm } from "react-hook-form";
-import { deleteFileAction } from "@/actions/deleteFileAction";
-import { updateFile } from "@/actions/updateFile";
 
 export function FileCard({ data }) {
   const formatter = Intl.DateTimeFormat("ru-RU", {
@@ -79,7 +76,7 @@ export function FileCard({ data }) {
         <div className="flex flex-col gap-0.5 w-full">
           <div className="flex justify-between gap-3">
             <div className="font-bold">Тип:</div>
-            <div className="font-sans text-right">{data.type}</div>
+            <div className="font-sans text-right truncate">{data.type}</div>
           </div>
           <div className="flex justify-between gap-3">
             <div className="font-bold">Размер:</div>

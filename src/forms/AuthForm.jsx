@@ -1,10 +1,10 @@
 "use client";
 
+import { loginAction } from "@/actions/user";
+import { Button, Input } from "@/components";
 import { useRef } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
-import { Input, Button } from "@/components";
-import { loginAction } from "@/actions/loginAction";
 
 export function AuthForm({ sw }) {
   const [state, action] = useFormState(loginAction, null);

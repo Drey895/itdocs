@@ -1,23 +1,12 @@
 "use client";
 
-import { createPortal } from "react-dom";
-import { Button, Input } from ".";
-import { useEffect, useState, useRef, use } from "react";
-import { useForm } from "react-hook-form";
-import { uploadFile } from "@/actions/uploadFile";
-import { useFormState } from "react-dom";
+import { uploadFile } from "@/actions/file";
+import { Button, Input } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
-
-function getReadableFileSizeString(fileSizeInBytes) {
-  var i = -1;
-  var byteUnits = [" kB", " MB", " GB", " TB", "PB", "EB", "ZB", "YB"];
-  do {
-    fileSizeInBytes /= 1000;
-    i++;
-  } while (fileSizeInBytes > 1000);
-
-  return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
-}
+import { getReadableFileSizeString } from "@/utils";
+import { use, useEffect, useRef, useState } from "react";
+import { createPortal, useFormState } from "react-dom";
+import { useForm } from "react-hook-form";
 
 export function AddFile() {
   const [showModal, setShowModal] = useState(false);

@@ -1,18 +1,12 @@
 "use client";
 
-import { FileCard, Packer, Delegate } from "@/components";
+import { Packer } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
 import { selectFilesByUser } from "@/queries/files";
 import { getUser } from "@/user";
-import { Suspense, useCallback, useEffect, useState, use } from "react";
-
-function debounce(func, wait) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
+import { debounce } from "@/utils";
+import { Suspense, use, useCallback, useEffect, useState } from "react";
+import { FileCard } from ".";
 
 export function FilesGrid({ init }) {
   const [files, setFiles] = useState([init]);

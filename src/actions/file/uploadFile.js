@@ -5,7 +5,6 @@ import { getUser } from "@/user";
 import { saveFile } from "./saveFile";
 
 export async function uploadFile(prevState, formData) {
-  console.log(formData);
   if (prevState?.data) return null;
   try {
     const user = await getUser();

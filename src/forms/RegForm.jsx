@@ -1,10 +1,10 @@
 "use client";
 
+import { regAction } from "@/actions/user";
+import { Button, Input } from "@/components";
 import { useRef } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
-import { Input, Button } from "@/components";
-import { regAction } from "@/actions/regAction";
 
 export function RegForm({ sw }) {
   const [state, action] = useFormState(regAction, null);
