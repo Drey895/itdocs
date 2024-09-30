@@ -2,15 +2,16 @@
 
 import { Packer } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
-import { selectFilesByUser } from "@/queries/files";
-import { getUser } from "@/user";
+import { selectFilesByGroup } from "@/queries/files/selectFilesByGroup";
 import { debounce } from "@/utils";
+import { useParams } from "next/navigation";
 import { Suspense, use, useCallback, useEffect, useState } from "react";
 import { FileCard } from ".";
 
 export function FilesGrid({ init }) {
   const [files, setFiles] = useState([init]);
   const [lastRequestedFileId, setLastRequestedFileId] = useState(null);
+  const params = useParams();
 
   const onScroll = useCallback(
     debounce(async (e) => {
@@ -25,9 +26,7 @@ export function FilesGrid({ init }) {
         if (lastFile.id === lastRequestedFileId) return; // Prevent duplicate requests
         setLastRequestedFileId(lastFile.id); // Update last requested file ID
 
-        const user = await getUser();
-
-        const newPack = selectFilesByUser(user.id, 15, lastFile.id);
+        const newPack = selectFilesByGroup(params.groupId, 15, lastFile.id);
         if ((await newPack).length === 0) return;
         setFiles((prev) => [...prev, newPack]);
       }

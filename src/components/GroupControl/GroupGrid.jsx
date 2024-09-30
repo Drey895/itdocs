@@ -2,8 +2,7 @@
 
 import { Packer } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
-import { selectFilesByUser } from "@/queries/files";
-import { getUser } from "@/user";
+import { selectGroups } from "@/queries/groups";
 import { debounce } from "@/utils";
 import { Suspense, use, useCallback, useEffect, useState } from "react";
 import { GroupCard } from ".";
@@ -25,9 +24,7 @@ export function GroupGrid({ init }) {
         if (lastFile.id === lastRequestedFileId) return; // Prevent duplicate requests
         setLastRequestedFileId(lastFile.id); // Update last requested file ID
 
-        const user = await getUser();
-
-        const newPack = selectFilesByUser(user.id, 15, lastFile.id);
+        const newPack = selectGroups(15, lastFile.id);
         if ((await newPack).length === 0) return;
         setFiles((prev) => [...prev, newPack]);
       }

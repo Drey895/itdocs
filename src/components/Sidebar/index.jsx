@@ -21,6 +21,7 @@ export function Sidebar({ user }) {
           {user && user.role === "admin" && (
             <>
               <NavButton href={"/panel/admin/users"}>Пользователи</NavButton>
+              <NavButton href={"/panel/admin/stats"}>Отчет</NavButton>
             </>
           )}
         </nav>

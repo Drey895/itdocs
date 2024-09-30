@@ -5,7 +5,7 @@ import { getUser } from "@/user";
 
 export async function Groups() {
   const user = await getUser();
-  const groups = selectGroups(30);
+  const groups = selectGroups(50);
   return (
     <ExtraProvider user={user}>
       <title>Группы | IT-Docs</title>
