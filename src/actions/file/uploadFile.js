@@ -10,6 +10,7 @@ export async function uploadFile(prevState, formData) {
     const user = await getUser();
     const file = {
       user_id: user?.id,
+      group_id: formData.get("group_id") || null,
       name: formData.get("name"),
       size: formData.get("size"),
       type: formData.get("type"),

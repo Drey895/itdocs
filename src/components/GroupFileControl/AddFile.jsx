@@ -4,14 +4,11 @@ import { uploadFile } from "@/actions/file";
 import { Button, Input } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
 import { getReadableFileSizeString } from "@/utils";
-import { useParams } from "next/navigation";
 import { use, useEffect, useRef, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 
 export function AddFile() {
-  const params = useParams();
-
   const [showModal, setShowModal] = useState(false);
   const fileRef = useRef(null);
   const [file, setFile] = useState(null);
@@ -26,9 +23,7 @@ export function AddFile() {
   }, [showModal]);
 
   const [state, action] = useFormState(uploadFile, null);
-  const { register, setValue } = useForm({
-    defaultValues: { group_id: params.group_id },
-  });
+  const { register, setValue } = useForm();
 
   useEffect(() => {
     if (state?.data) {
@@ -96,7 +91,6 @@ export function AddFile() {
                   }}
                   hidden
                 />
-                <input type="text" {...register("group_id")} hidden />
                 <div className="flex flex-col w-full gap-4">
                   <div className="flex flex-col gap-0.5">
                     <label htmlFor="name">Имя</label>
