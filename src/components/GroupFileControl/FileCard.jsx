@@ -15,6 +15,13 @@ export function FileCard({ data }) {
     hour12: false,
     timeZone: "+0300",
   });
+
+  const intFormatter = Intl.NumberFormat("ru-RU", {
+    style: "decimal",
+    maximumFractionDigits: 0,
+    maximumSignificantDigits: 3,
+    notation: "compact",
+  });
   const { isSelectable, user } = use(ExtraContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -32,12 +39,19 @@ export function FileCard({ data }) {
     <>
       <div
         className={`flex justify-center items-center flex-col p-5 border shadow-sm rounded-lg min-w-[300px] gap-3 ${
-          isSelectable && data.user_id === user.id
+          isSelectable &&
+          (data.user_id === user.id || user.role === "admin"
             ? "border-red-300 cursor-pointer"
-            : ""
+            : "border-blue-300 cursor-not-allowed")
         }`}
         onClick={(e) => {
-          if (!(isSelectable && data.user_id === user.id)) return;
+          if (
+            !(
+              isSelectable &&
+              (data.user_id === user.id || user.role === "admin")
+            )
+          )
+            return;
           setShowModal(true);
         }}
       >
@@ -81,6 +95,12 @@ export function FileCard({ data }) {
           <div className="flex justify-between gap-3">
             <div className="font-bold">Размер:</div>
             <div className="font-sans text-right">{data.size}</div>
+          </div>
+          <div className="flex justify-between gap-3">
+            <div className="font-bold">Кол-во загрузок:</div>
+            <div className="font-sans text-right">
+              {intFormatter.format(data.download_count)}
+            </div>
           </div>
           <div className="flex justify-between gap-3">
             <div className="font-bold">Дата загрузки:</div>

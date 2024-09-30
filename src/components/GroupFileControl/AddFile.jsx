@@ -4,6 +4,7 @@ import { uploadFile } from "@/actions/file";
 import { Button, Input } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
 import { getReadableFileSizeString } from "@/utils";
+import { useParams } from "next/navigation";
 import { use, useEffect, useRef, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,7 @@ export function AddFile() {
   const fileRef = useRef(null);
   const [file, setFile] = useState(null);
   const { setExtra } = use(ExtraContext);
+  const params = useParams();
 
   useEffect(() => {
     if (showModal) {
@@ -23,7 +25,11 @@ export function AddFile() {
   }, [showModal]);
 
   const [state, action] = useFormState(uploadFile, null);
-  const { register, setValue } = useForm();
+  const { register, setValue } = useForm({
+    defaultValues: {
+      group_id: params.groupId,
+    },
+  });
 
   useEffect(() => {
     if (state?.data) {
@@ -35,6 +41,7 @@ export function AddFile() {
     setExtra((prev) => [file, ...prev]);
     setShowModal(false);
     setFile(null);
+    setTimeout(() => window.location.reload(), 100);
   }
 
   return (
@@ -53,6 +60,7 @@ export function AddFile() {
                 action={action}
                 className="flex flex-col gap-8 justify-center items-center"
               >
+                <input type="hidden" {...register("group_id")} />
                 <div
                   className="w-full flex flex-wrap justify-center items-center p-20 border-2 text-sm text-center border-dashed rounded-lg gap-2"
                   onDragOver={(e) => {

@@ -9,12 +9,13 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 
 export function FileCard({ data }) {
-  const formatter = Intl.DateTimeFormat("ru-RU", {
+  const dateFormatter = Intl.DateTimeFormat("ru-RU", {
     dateStyle: "medium",
     timeStyle: "short",
     hour12: false,
     timeZone: "+0300",
   });
+
   const { isSelectable, user } = use(ExtraContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -85,7 +86,7 @@ export function FileCard({ data }) {
           <div className="flex justify-between gap-3">
             <div className="font-bold">Дата загрузки:</div>
             <div className="font-sans text-right">
-              {formatter.format(data.created_at)}
+              {dateFormatter.format(data.created_at)}
             </div>
           </div>
         </div>

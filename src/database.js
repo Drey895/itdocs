@@ -1,6 +1,8 @@
 import postgres from "postgres";
 
-const sql = postgres("postgres://postgres:postgres@db:5432/itdocs");
+const sql = postgres("postgres://postgres:postgres@db:5432/itdocs", {
+  onnotice: () => false,
+});
 
 // await sql`DROP TABLE IF EXISTS "public"."files"`;
 // await sql`DROP TABLE IF EXISTS "public"."users"`;
@@ -36,6 +38,7 @@ await sql`CREATE TABLE IF NOT EXISTS "public"."files" (
 		"name" text NOT NULL,
 		"size" text NOT NULL,
 		"type" text NOT NULL,
+		"download_count" int8 NOT NULL DEFAULT 0,
 		"created_at" timestamptz NOT NULL DEFAULT now(),
 		CONSTRAINT "files_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id"),
 		CONSTRAINT "files_group_id_fkey" FOREIGN KEY ("group_id") REFERENCES "public"."groups"("id")

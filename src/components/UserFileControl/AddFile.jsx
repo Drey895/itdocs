@@ -40,6 +40,7 @@ export function AddFile() {
     setExtra((prev) => [file, ...prev]);
     setShowModal(false);
     setFile(null);
+    setTimeout(() => window.location.reload(), 100);
   }
 
   return (
