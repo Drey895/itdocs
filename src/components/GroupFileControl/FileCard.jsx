@@ -4,7 +4,7 @@ import { deleteFileAction, downloadFile, updateFile } from "@/actions/file";
 import { Button, Input } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
 import { getUser } from "@/user";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 
@@ -26,6 +26,14 @@ export function FileCard({ data }) {
 
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showModal]);
+
   const { register } = useForm({
     defaultValues: {
       id: data.id,
@@ -46,13 +54,10 @@ export function FileCard({ data }) {
         }`}
         onClick={(e) => {
           if (
-            !(
-              isSelectable &&
-              (data.user_id === user.id || user.role === "admin")
-            )
+            isSelectable &&
+            (data.user_id === user.id || user.role === "admin")
           )
-            return;
-          setShowModal(true);
+            setShowModal(true);
         }}
       >
         <div className="flex justify-between items-center w-full gap-2">
@@ -113,7 +118,7 @@ export function FileCard({ data }) {
       </div>
       {showModal &&
         createPortal(
-          <div className="absolute z-50 w-[-webkit-fill-available] h-full max-h-[100vh] bg-black/70 backdrop-blur-sm flex justify-center items-center">
+          <div className="fixed z-50 w-[-webkit-fill-available] h-full max-h-[100vh] bg-black/70 backdrop-blur-sm flex justify-center items-center">
             <div className="flex flex-col bg-white rounded-lg p-6 sm:w-[450px] lg:w-[600px] xl:w-[750px]">
               <form
                 className="flex flex-col gap-8 justify-center items-center"

@@ -17,6 +17,7 @@ export function DownloadStatsButton() {
             orientation: "p",
           },
         };
+        /** @type {any} */
         const node = document.querySelector("#pdf").cloneNode(true);
         node.style.display = "flex";
         await html2pdf().from(node).set(options).save();

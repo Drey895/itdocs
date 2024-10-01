@@ -3,8 +3,8 @@
 import { selectFileById } from "@/queries/files";
 import { deleteFile } from "@/queries/files/deleteFile";
 import { getUser } from "@/user";
-import path from "path";
 import fs from "fs/promises";
+import path from "path";
 
 export async function deleteFileAction(fileId) {
   const user = await getUser();

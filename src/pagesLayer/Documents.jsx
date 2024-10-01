@@ -13,7 +13,7 @@ export async function Documents() {
         <AddFile />
         <EditFile />
       </div>
-      <FilesGrid init={files} />
+      <FilesGrid init={files} user={user} />
     </ExtraProvider>
   );
 }

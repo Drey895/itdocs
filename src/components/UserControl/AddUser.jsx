@@ -1,15 +1,17 @@
 "use client";
 
-import { addGroupAction } from "@/actions/group";
+import { addUserAction } from "@/actions/user/addUserAction";
 import { Button, Input } from "@/components";
 import { ExtraContext } from "@/ExtraContext";
-import { use, useEffect, useRef, useState } from "react";
+import { useParams } from "next/navigation";
+import { use, useEffect, useState } from "react";
 import { createPortal, useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 
-export function AddGroup() {
+export function AddUser() {
+  const params = useParams();
+
   const [showModal, setShowModal] = useState(false);
-  const fileRef = useRef(null);
   const [file, setFile] = useState(null);
   const { setExtra } = use(ExtraContext);
 
@@ -21,7 +23,7 @@ export function AddGroup() {
     }
   }, [showModal]);
 
-  const [state, action] = useFormState(addGroupAction, null);
+  const [state, action] = useFormState(addUserAction, null);
   const { register, setValue } = useForm();
 
   useEffect(() => {
@@ -48,15 +50,22 @@ export function AddGroup() {
       {showModal &&
         createPortal(
           <div className="fixed z-50 w-[-webkit-fill-available] h-full max-h-[100vh] bg-black/70 backdrop-blur-sm flex justify-center items-center">
-            <div className="flex flex-col bg-white rounded-lg p-6 sm:w-[450px] lg:w-[600px] xl:w-[750px]">
+            <div className="flex flex-col bg-white rounded-lg p-6 sm:w-[450px] lg:w-[500px] xl:w-[550px]">
               <form
                 action={action}
                 className="flex flex-col gap-8 justify-center items-center"
               >
                 <div className="flex flex-col w-full gap-4">
                   <div className="flex flex-col gap-0.5">
-                    <label htmlFor="name">Название</label>
-                    <Input s={{ ...register("name"), required: true }} />
+                    <label htmlFor="name">Логин</label>
+                    <Input s={{ ...register("username"), required: true }} />
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <label htmlFor="type">Пароль</label>
+                    <Input
+                      s={{ ...register("password"), required: true }}
+                      className="bg-black/10"
+                    />
                   </div>
                 </div>
                 <div className="flex flex-row gap-5 justify-between items-center w-full">

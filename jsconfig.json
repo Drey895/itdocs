@@ -1,7 +1,16 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM"],
+    "checkJs": true,
+    "skipDefaultLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ESNext"
+  },
+  "exclude": ["node_modules", "**/node_modules/*", ".next"]
 }

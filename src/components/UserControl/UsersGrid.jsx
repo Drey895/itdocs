@@ -6,9 +6,9 @@ import { selectFilesByGroup } from "@/queries/files/selectFilesByGroup";
 import { debounce } from "@/utils";
 import { useParams } from "next/navigation";
 import { Suspense, use, useCallback, useEffect, useState } from "react";
-import { FileCard } from ".";
+import { UserCard } from ".";
 
-export function FilesGrid({ init }) {
+export function UsersGrid({ init }) {
   const [files, setFiles] = useState([init]);
   const [lastRequestedFileId, setLastRequestedFileId] = useState(null);
   const params = useParams();
@@ -41,16 +41,16 @@ export function FilesGrid({ init }) {
     };
   });
 
-  const { extra } = use(ExtraContext);
+  const { extra, Delegate } = use(ExtraContext);
 
   return (
-    <div className="w-full flex-1 grid grid-cols-auto-300 xl:grid-cols-auto-450 content-start justify-evenly place-content-center place-items-center justify-items-stretch gap-5 p-1 sm:p-2 md:p-4 lg:p-6 max-w-[1440px]">
+    <div className="w-full flex-1 gap-5 p-1 sm:p-2 md:p-4 lg:p-6 flex flex-col">
       {extra.map((obj) => (
-        <FileCard key={obj.id} data={obj} />
+        <UserCard key={obj.id} data={obj} />
       ))}
       {files.map((filePack, i) => (
         <Suspense key={i} fallback={<></>}>
-          <Packer Delegate={FileCard} packPromise={filePack} />
+          <Packer Delegate={UserCard} packPromise={filePack} />
         </Suspense>
       ))}
     </div>

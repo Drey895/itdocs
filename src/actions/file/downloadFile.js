@@ -19,6 +19,7 @@ export async function downloadFile(fileId, userId) {
   ) {
     const query =
       await sql`UPDATE files SET download_count = download_count + 1 WHERE id = ${fileId}`;
+    await sql`UPDATE users SET download_count = download_count + 1 WHERE id = ${userId}`;
     const filePath = path.join("files", file.type, String(fileId));
     const fileData = await fs.readFile(filePath);
     const base64String = fileData.toString("base64");
