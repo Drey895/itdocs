@@ -18,8 +18,10 @@ export function Sidebar({ user }) {
         <nav className="flex flex-col gap-1 justify-center w-full">
           <NavButton href={"/panel/documents"}>Документы</NavButton>
           <NavButton href={"/panel/groups"}>Группы</NavButton>
+          <NavButton href={"/panel/stats"}>Отчет</NavButton>
           {user && user.role === "admin" && (
             <>
+              <span className="text-center my-5">Панель администратора</span>
               <NavButton href={"/panel/admin/users"}>Пользователи</NavButton>
               <NavButton href={"/panel/admin/stats"}>Отчет</NavButton>
             </>
