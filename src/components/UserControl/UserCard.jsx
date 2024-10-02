@@ -3,13 +3,13 @@
 import { deleteUserAction } from "@/actions/user/deleteUserAction";
 import { updateUserAction } from "@/actions/user/updateUserAction";
 import { Button, Input } from "@/components";
-import { ExtraContext } from "@/ExtraContext";
+import { ExtraContext, ExtraProvider } from "@/ExtraContext";
 import { selectFilesByUser } from "@/queries/files";
 import html2pdf from "html2pdf.js";
 import { use, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
-import { FilesGrid } from "../UserFileControl";
+import { EditFile, FilesGrid } from "../UserFileControl";
 
 export function UserCard({ data }) {
   const dateFormatter = Intl.DateTimeFormat("ru-RU", {
@@ -141,17 +141,23 @@ export function UserCard({ data }) {
           </Button>
         </div>
         <div
-          className={`transition-all duration-300 ease-in-out transform-gpu w-full ${
+          className={`transition-all duration-300 ease-in-out transform-gpu w-full flex flex-col gap-2 items-center ${
             !showGrid
               ? "max-h-0 overflow-hidden"
               : "max-h-[50vh] overflow-auto mt-5"
           }`}
         >
-          <FilesGrid
-            init={selectFilesByUser(data.id, 30)}
-            user={data}
-            el={`userfiles-${data.id}`}
-          />
+          <ExtraProvider user={data}>
+            {" "}
+            <div className="flex flex-row gap-2 w-full">
+              <EditFile />
+            </div>
+            <FilesGrid
+              init={selectFilesByUser(data.id, 30)}
+              user={data}
+              el={`userfiles-${data.id}`}
+            />
+          </ExtraProvider>
         </div>
       </div>
       {showModal &&
