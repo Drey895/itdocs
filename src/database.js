@@ -1,10 +1,13 @@
 import postgres from "postgres";
 
-const sql = postgres("postgres://postgres:postgres@localhost:5432/itdocs", {
-  onnotice: () => false,
-  idle_timeout: 20,
-  max_lifetime: 60 * 30,
-});
+const sql = postgres(
+  `postgres://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+  {
+    onnotice: () => false,
+    idle_timeout: 20,
+    max_lifetime: 60 * 30,
+  }
+);
 
 // await sql`DROP TABLE IF EXISTS "public"."files"`;
 // await sql`DROP TABLE IF EXISTS "public"."users"`;
